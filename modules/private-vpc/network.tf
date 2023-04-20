@@ -36,9 +36,11 @@ resource "aws_subnet" "transit" {
 
 # -- Transit Gateway
 resource "aws_ec2_transit_gateway_vpc_attachment" "transit" {
-  vpc_id             = aws_vpc.main.id
-  subnet_ids         = [aws_subnet.transit.id]
-  transit_gateway_id = var.transit_gateway_id
+  vpc_id                                          = aws_vpc.main.id
+  subnet_ids                                      = [aws_subnet.transit.id]
+  transit_gateway_id                              = var.transit_gateway_id
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
 }
 
 # -- Route Table

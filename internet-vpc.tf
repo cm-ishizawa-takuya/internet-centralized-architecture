@@ -68,9 +68,11 @@ resource "aws_eip" "internet" {
 
 # -- Transit Gateway
 resource "aws_ec2_transit_gateway_vpc_attachment" "internet" {
-  transit_gateway_id = aws_ec2_transit_gateway.main.id
-  vpc_id             = aws_vpc.internet.id
-  subnet_ids         = [aws_subnet.internet_transit.id]
+  transit_gateway_id                              = aws_ec2_transit_gateway.main.id
+  vpc_id                                          = aws_vpc.internet.id
+  subnet_ids                                      = [aws_subnet.internet_transit.id]
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
 }
 
 # -- Route Table
