@@ -1,5 +1,5 @@
 locals {
-  prefix = "${var.system_id}-workload${var.workload_index}"
+  prefix = "${var.system_id}-${var.service_type}${var.index}"
 }
 
 # -- VPC
