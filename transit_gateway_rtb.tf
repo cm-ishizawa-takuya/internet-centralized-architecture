@@ -16,10 +16,10 @@ resource "aws_ec2_transit_gateway_route" "block_inter_workloads" {
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "workload_vpc" {
-  for_each = { for v in range(var.workload_count) : v => v }
+  count = var.workload_count
 
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.workload_vpc.id
-  transit_gateway_attachment_id  = module.workload_vpc[each.value].transit_gateway_attachment_id
+  transit_gateway_attachment_id  = module.workload_vpc[count.index].transit_gateway_attachment_id
 }
 
 # Route Table for Internet-VPC
@@ -28,10 +28,10 @@ resource "aws_ec2_transit_gateway_route_table" "internet_vpc" {
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "internet_vpc" {
-  for_each = { for v in range(var.workload_count) : v => v }
+  count = var.workload_count
 
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.internet_vpc.id
-  transit_gateway_attachment_id  = module.workload_vpc[each.value].transit_gateway_attachment_id
+  transit_gateway_attachment_id  = module.workload_vpc[count.index].transit_gateway_attachment_id
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "internet_vpc" {
